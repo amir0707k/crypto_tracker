@@ -58,6 +58,9 @@ a{
   cursor: pointer;
 }
 
+html{
+  scroll-behavior: smooth;
+}
 
 img {
   -webkit-user-drag: none;
