@@ -1,11 +1,8 @@
 import React, {useState} from "react";
 import Pagination from "@mui/material/Pagination";
 import './styles.css'
-export default function PaginationControlled() {
-  const [page, setPage] = useState(1);
-  const handleChange = (event, value) => {
-    setPage(value);
-  };
+export default function PaginationControlled({page, handleChange}) {
+  
 
   return (
     <div className="pagination-component">
