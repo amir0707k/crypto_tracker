@@ -2,16 +2,25 @@ import React, { useEffect, useState } from 'react'
 import Header from '../components/Common/Header'
 import TabsComponent from '../components/Dashboard/Tabs'
 import axios from 'axios'
+import Search from '../components/Dashboard/Search'
+import PaginationControlled from '../components/Dashboard/Pagination'
 
 function DashboardPage() {
 
   const [coins, setCoins] = useState([])
+  const [search, setSearch] = useState("");
+
+  const onSearchChange = (e) => {
+    setSearch(e.target.value);
+  }
+
+  let filteredCoins = coins.filter(
+    (item) => {
+      return item.name.toLowerCase().includes(search.toLowerCase()) || item.symbol.toLowerCase().includes(search.toLowerCase());
+    }
+  )
 
   useEffect(()=> {
-    // fetch(
-    //   "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en"
-    // ).then((response) => response.json())
-    // .then(data => console.log(data));
 
     axios.get(
       "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false&locale=en"
@@ -27,10 +36,12 @@ function DashboardPage() {
 
   return (
     <div>
-      <Header/>
-      <TabsComponent coins = {coins}/>
+      <Header />
+      <Search search={search} onSearchChange={onSearchChange} />
+      <TabsComponent coins={filteredCoins} />
+      <PaginationControlled/>
     </div>
-  )
+  );
 }
 
 export default DashboardPage
